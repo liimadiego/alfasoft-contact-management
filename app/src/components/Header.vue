@@ -5,7 +5,7 @@
     <div class="actions">
       <template v-if="user">
         <span>Welcome, {{ user.email }}</span>
-        <button @click="logout">Sair</button>
+        <button @click="logout">Logout</button>
       </template>
 
       <template v-else>
