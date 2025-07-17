@@ -49,7 +49,6 @@ async function deleteContact(contact: any) {
   
   try {
     const token = localStorage.getItem('token');
-    console.log(token)
 
     if (!token) {
       return;
