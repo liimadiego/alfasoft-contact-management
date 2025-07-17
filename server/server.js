@@ -49,9 +49,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../html/index.html'));
 });
 
-async function startServer() {
-    await initializeDatabase();
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
+initializeDatabase();
 
-startServer();
+module.exports = app;
