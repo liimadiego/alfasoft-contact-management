@@ -49,21 +49,24 @@ async function deleteContact(contact: any) {
   
   try {
     const token = localStorage.getItem('token');
+    console.log(token)
 
     if (!token) {
       return;
     }
     const res = await fetch(`${SERVER_URL}/api/contacts/${contact.id}`, {
-      method: 'DELETE'
-      ,headers: {
+      method: 'DELETE',
+      headers: {
         Authorization: `Bearer ${token}`
-      },
+      }
     });
     
     if (!res.ok) throw new Error('Failed to delete contact');
     
     alert('Contact deleted successfully!');
     emit('deleted', contact.id);
+
+    window.location.reload();
   } catch (err: any) {
     alert('Error deleting contact: ' + (err.message || 'Unknown error'));
     isDeleting.value = false;
