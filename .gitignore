@@ -3,3 +3,4 @@
 /html
 /app/.env
 /app/node_modules
+/server/uploads

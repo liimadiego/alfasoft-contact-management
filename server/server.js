@@ -13,7 +13,13 @@ const authRoutes = require('./routes/auth.routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            "img-src": ["'self'", "data:", "blob:"],
+        },
+    },
+}));
 app.use(cors({
     origin: '*',
     credentials: true
@@ -26,6 +32,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/contacts', contactsRoutes);
 app.use('/api/auth', authRoutes);
 
+app.use(express.static(path.join(__dirname, '../html')));
+
 app.use((error, req, res, next) => {
     console.log(error)
     if (error instanceof multer.MulterError && error.code === 'LIMIT_FILE_SIZE') {
@@ -35,6 +43,10 @@ app.use((error, req, res, next) => {
         return res.status(400).json({ error: 'Only image files are allowed' });
     }
     res.status(500).json({ error: 'Something went wrong' });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../html/index.html'));
 });
 
 async function startServer() {
